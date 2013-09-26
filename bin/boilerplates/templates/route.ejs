@@ -1,0 +1,37 @@
+/*
+ *	<%= name %>
+ *
+ *	@modulo			::	Rutas
+ *	@descripcion	::	Manejo de Rutas y sus funciones asociadas.
+ */
+
+module.exports 
+=	{
+	/*	Rutas del Modelo			Accion en el Control del Modelo
+		e.j. de Ruta Customizada
+		'GET /<%=name.toLowerCase()%>/holaMundo':	'holaMundo'
+	*/
+
+		'GET /<%=name.toLowerCase()%>':			'findAll'
+	,	'GET /<%=name.toLowerCase()%>/:id':		'findOne'
+	,	'GET /<%=name.toLowerCase()%>/count':		'count'
+	,	'GET /<%=name.toLowerCase()%>/describe':	'describe'
+	,	'PUT /<%=name.toLowerCase()%>/:id':		'update'
+	,	'PUT /<%=name.toLowerCase()%>':			'create'
+	,	'POST /<%=name.toLowerCase()%>/filter':	'filter'
+	,	'POST /<%=name.toLowerCase()%>/find':		'find'
+	,	'DELETE /<%=name.toLowerCase()%>/:id':	'delete'
+
+
+	/*	Rutas de sus Assocs (Si tiene)			Accion en el Control del Modelo para el Assoc
+		e.j. de Ruta Customizada del Assoc
+		'GET /<%=name.toLowerCase()%>/:id/assocEnParticular':	'customFunctionDelAssoc'
+	*/
+
+	,	'GET /<%=name.toLowerCase()%>/:id/:assoc':			'resolveAssoc'
+	,	'GET /<%=name.toLowerCase()%>/:id/:assoc/count':		'countAssoc'
+	,	'GET /<%=name.toLowerCase()%>/:id/:assoc/describe':	'describeAssoc'
+	,	'POST /<%=name.toLowerCase()%>/:id/:assoc':			'filterAssoc'
+	,	'PUT /<%=name.toLowerCase()%>/:id/:assoc':			'createAssoc'
+	,	'DELETE /<%=name.toLowerCase()%>/:id/:assoc':			'deleteAssoc'
+	}

@@ -1,0 +1,35 @@
+{
+  "author": {
+    "name": "SIGMA-IT"
+  },
+  "name": "sgm",
+  "description": "Sigma ORM",
+  "version": "0.0.26",
+  "repository": {
+    "url": ""
+  },
+  "main": "./lib/index.js",
+  "bin": {
+    "sgm": "./bin/sgm.js"
+  },
+  "dependencies": {
+    "lodash": "~2.1.0",
+    "optimist": "~0.6.0",
+    "express": "~3.4.0",
+    "q": "~0.9.7",
+    "underscore.string": "~2.3.3",
+    "ejs": "~0.8.4",
+    "log-color": "~1.0.0",
+    "fs-extra": "~0.6.4",
+    "include-all": "~0.1.1"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "readme": "#\tEstructura de la Aplicacion\n\n\tAPP_NAME/\n\t|\tmodels/\n\t|\t|\tpersonas.js\n\t|\tcontrols/\n\t|\t|\tpersonas.js\n\t|\troutes/\n\t|\t|\tpersonas.js\n\t|\ttests/\n\t|\t|\tpersonas.js\n\t|\tnode_modules/\n\t|\tapp.js\n\n\n#\tComandos del a APP\n\n##\tGeneradores\n\t\n\t|\tsgm new APP_NAME\tcrea la estructura de la app en la carpeta APP_NAME, si no existe la crea, si existe la usa como base\n\t|\tsgm\tgenerate NAME\tcrea un Model, Controller, Routes y Test con el nombre NAME dentro de las carpetas correspondiente. si existe te PUTEA\n\t\n##\tDebug y Start\n\n\t|\tsgm start\t\t\tInicia la APP en modo desarrollo (Como app)\n\t|\tsgm\tstart -t\t\tCorre los Tests de la APP\n\t|\tsgm start -p\t\tInicia la APP en modo Produccion (Como un Servicio)\n\t|\tsgm stop\t\t\tDetiene la APP en modo Produccion\n\n\n#\tEstructura del Controller\n\t{\n\t\t'findAll': \t\t\t\t\tAdapter.FindAll\n\t,\t'findOne': \t\t\t\t\tAdapter.FindOne\n\t,\t'count':\t\t\t\t\tAdapter.Count\n\t,\t'describe':\t\t\t\t\tAdapter.Describe\n\t,\t'update':\t\t\t\t\tAdapter.Update\n\t,\t'create':\t\t\t\t\tAdapter.Create\n\t,\t'filter':\t\t\t\t\tAdapter.FindAll\n\t,\t'find':\t\t\t\t\t\tAdapter.FindOne\n\t,\t'delete': \t\t\t\t\tAdapter.Delete\n\t,\t'resolveAssoc':\t\t\t\tAdapter.FindAll | Adapter.FindOne (Depende del Assoc)\n\t,\t'countAssoc':\t\t\t\tAdapter.Count\n\t,\t'describeAssoc':\t\t\tAdapter.Describe\n\t,\t'filterAssoc':\t\t\t\tAdapter.Filter (Solo ocurre si el assoc es has-many, has-many:through o has-and-belongs-to-many)\n\t,\t'createAssoc':\t\t\t\tAdapter.Create\n\t,\t'deleteAssoc': \t\t\t\tAdapter.Delete\n\t}\n\n#\tEstructura Routes\n\t{\n\t//\tRutas del Modelo\t\t\t\t\t\tAccion en el Control del Modelo\n\t\t'GET \t/personas':\t\t\t\t\t\t'findAll'\n\t,\t'GET \t/personas/:id':\t\t\t\t\t'findOne'\n\t,\t'GET \t/personas/count':\t\t\t\t'count'\n\t,\t'GET \t/personas/describe':\t\t\t'describe'\n\t,\t'PUT \t/personas/:id':\t\t\t\t\t'update'\n\t,\t'PUT \t/personas':\t\t\t\t\t\t'create'\n\t,\t'POST \t/personas/filter':\t\t\t\t'filter'\n\t,\t'POST \t/personas/find':\t\t\t\t'find'\n\t,\t'DELETE\t/personas/:id':\t\t\t\t\t'delete'\n\n\t//\tRutas de sus Assocs (Si tiene)\t\t\tAccion en el Control del Modelo\n\t,\t'GET\t/personas/:id/:assoc':\t\t\t'resolveAssoc'\n\t,\t'GET\t/personas/:id/:assoc/count':\t'countAssoc'\n\t,\t'GET\t/personas/:id/:assoc/describe':\t'describeAssoc'\n\t,\t'POST\t/personas/:id/:assoc':\t\t\t'filterAssoc'\n\t,\t'PUT\t/personas/:id/:assoc':\t\t\t'createAssoc'\n\t,\t'DELETE\t/personas/:id/:assoc':\t\t\t'deleteAssoc'\n\t}\n\n#\tEstructura Modelo\n\t{\n\t\ttable_name: 'personas'\n\t,\tadapter: 'mongo'\n\t,\tcontent_type: 'hal'\n\t,\tbeforeValidate: function() {}\n\t,\tbeforeCreate: function() {}\n\t,\tafterCreate: function() {}\n\t,\tbeforeUpdate: function() {}\n\t,\tafterUpdate: function() {}\n\t,\tbeforeDestroy: function() {}\n\t,\tafterDestroy: function() {}\n\t,\ttoJSON: function() {}\n\t,\ttoHAL: function() {}\n\t,\tattributes:\n\t\t{\n\t\t\t//\tOpcional\n\t\t\tid:\n\t\t\t{\n\t\t\t\ttype: 'Primary Key'\n\t\t\t,\tunique: true\n\t\t\t}\n\t\t,\tnombre: 'String'\n\t\t\t//\tNo es Opcional\n\t\t,\tMadre:\n\t\t\t{\n\t\t\t\ttype: 'Foreing Key'\n\t\t\t,\tmodel: 'Personas'\n\t\t\t}\n\t\t,\tPadre:\n\t\t\t{\n\t\t\t\ttype: 'Foreing Key'\n\t\t\t,\tmodel: 'Personas'\n\t\t\t}\n\t\t,\tHijos:\n\t\t\t{\n\t\t\t\ttype: 'Foreing Key'\n\t\t\t,\tmodel: 'Personas'\n\t\t\t}\n\t\t}\n\n\t,\tassociations:\n\t\t{\n\t\t\tMadre:\n\t\t\t{\n\t\t\t\ttype: 'belongs-to'\n\t\t\t,\tmodel: 'Personas'\t\t//\tModelo con que se relaciona\n\t\t\t}\n\t\t,\tPadre:\n\t\t\t{\n\t\t\t\ttype: 'belongs-to'\n\t\t\t,\tmodel: 'Personas'\t\t//\tModelo con que se relaciona\n\t\t\t}\n\t\t,\tHijos:\n\t\t\t{\n\t\t\t\ttype: 'has-many'\n\t\t\t,\tmodel: 'Personas'\t\t//\tModelo con que se relaciona\n\t\t\t}\n\t\t,\tNietos:\n\t\t\t{\n\t\t\t\ttype: 'has-many:through'\n\t\t\t,\tembedded: 'partial'\n\t\t\t,\tmodel: 'Personas'\t\t//\tModelo con que se relaciona\n\t\t\t,\tthrough: 'Hijos'\t\t//\tAssoc de la Instancia\n\t\t\t,\tassociation: 'Hijos'\t//\tAssoc de la/s Instancias del atributo Through de arriba\n\t\t\t}\n\t\t}\n\t}\n\n#\tOtras Consideraciones\n\n##\tTipoEmbedded (String)\n\t-\tnone\t>\tno sera embebido\n\t-\tpartial\t>\tsera embebido pero sus embebidos no tendran embebidos\n\t-\tfull\t>\tsera embebido pero sus embebidos definiran si tendran o no embebidos\n\n##\tTipoCollection (String[type] | Object)\n\t-\ttype:\tTipo de Collection (String)\n\t\t\t\tValor por defecto: list\n\t\t\t\tPosibles Valores: list - pageable - scrollable\n\t-\tipp:\tLIMIT (Integer)\n\t\t\t\tLimite de items por pagina\n\t\t\t\tValor por defecto: 10\n\t\t\t\tSi 0 entonces no tiene limites\n\t-\tpage:\tOFFSET (Integer)\n\t\t\t\tPagina de inicio\n\t\t\t\tValor por defecto: 1\n\t\t\t\tSi 0 entonces: 1\n\t-\tsortBy\tTipo de Orden\n\t\t\t\tValor por defecto: Atributo ID, Criterio menor a mayor (<)\n\t\t\t\tatribute: Atributo del Modelo\t(String)\n\t\t\t\tcriteria: Criterio de Comparacion\t(String)\n\t\t\t\t\t-\t<\tMenor a Mayor\n\t\t\t\t\t-\t>\tMayor a Menor\n\n#\tOtras propiedades de las Asociaciones\n\t\n##\tembedded:\t\n\t-\tTipoEmbedded\n\n##\tcollection: \n\t-\tString (TipoCollection | Toma Valores por defecto)\n\t-\tObject (Detalles TipoCollection)",
+  "readmeFilename": "README.md",
+  "_id": "sgm@0.0.26",
+  "_from": "sgm@"
+}
